@@ -15,6 +15,8 @@ class Camera:
         if frame is not None:
             # ToDo: save correctly with metadata that it has not been processed
             cv2.imwrite("screenshot.png", frame)
+        else:
+            raise EnvironmentError
 
     def release(self):
         self.cap.release()

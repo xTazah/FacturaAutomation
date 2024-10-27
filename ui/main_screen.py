@@ -3,6 +3,7 @@ from tkinter import PhotoImage
 from ui.camera_screen import CameraScreen
 from ui.settings_screen import SettingsScreen
 from button_factory import ButtonFactory
+from ui.toast import Toast
 
 class MainScreen:
     def __init__(self, root, settings_manager, camera):
@@ -44,7 +45,7 @@ class MainScreen:
 
     def show_camera_screen(self):
         if not self.camera_screen:
-                self.camera_screen = CameraScreen(self.container, self.camera)
+                self.camera_screen = CameraScreen(self.container, self.camera, self.create_toast)
 
         if self.current_screen != self.camera_screen:
             
@@ -56,7 +57,7 @@ class MainScreen:
 
     def show_settings_screen(self):
         if not self.settings_screen:
-            self.settings_screen = SettingsScreen(self.container, self.settings_manager)
+            self.settings_screen = SettingsScreen(self.container, self.settings_manager, self.create_toast)
 
         if self.current_screen != self.settings_screen:
 
@@ -72,3 +73,6 @@ class MainScreen:
 
     def on_closing(self):
         self.root.destroy()
+
+    def create_toast(self,text, auto_close_time = None):
+        Toast(self.root, text=text, auto_close_time=auto_close_time)

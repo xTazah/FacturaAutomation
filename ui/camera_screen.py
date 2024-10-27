@@ -3,10 +3,10 @@ from PIL import Image, ImageTk
 from camera import Camera
 
 class CameraScreen(tk.Frame):
-    def __init__(self, master, camera: Camera):
+    def __init__(self, master, camera: Camera, create_toast):
         super().__init__(master)
-
-        # Kamera-Objekt erstellen
+        self.create_toast = create_toast
+        self.master = master
         self.camera = camera
 
         self.canvas = tk.Canvas(self, width=640, height=480)
@@ -28,6 +28,7 @@ class CameraScreen(tk.Frame):
 
     def take_photo(self):
         self.camera.take_photo()
+        self.create_toast("Photo taken", 3000)
 
     def __del__(self):
         self.camera.release()
