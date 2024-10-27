@@ -1,10 +1,12 @@
 import tkinter as tk
 from ui.main_screen import MainScreen
 from settings_manager import SettingsManager
+from camera import Camera, CameraThread
 
 class App:
     def __init__(self):
         self.settings_manager = SettingsManager()
+        self.camera = Camera()
 
         self.root = tk.Tk()
         width = self.settings_manager.get("window_width", 800)
@@ -15,7 +17,8 @@ class App:
         # resize event
         self.root.bind("<Configure>", self.on_resize)
 
-        self.main_screen = MainScreen(self.root, self.settings_manager)
+        self.main_screen = MainScreen(self.root, self.settings_manager, self.camera)
+
 
     def on_resize(self, event):
         if event.widget == self.root:

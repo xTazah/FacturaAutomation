@@ -5,10 +5,11 @@ from ui.settings_screen import SettingsScreen
 from button_factory import ButtonFactory
 
 class MainScreen:
-    def __init__(self, root, settings_manager):
+    def __init__(self, root, settings_manager, camera):
         self.root = root
         self.root.title("Camera Scanner")
         self.settings_manager = settings_manager
+        self.camera = camera
 
         self.create_navigation()
 
@@ -40,12 +41,12 @@ class MainScreen:
 
     def show_camera_screen(self):
         self.clear_container()
-        self.current_screen = CameraScreen(self.container, self.show_settings)
+        self.current_screen = CameraScreen(self.container, self.camera)
         self.current_screen.grid(row=0, column=0)
 
     def show_settings(self):
         self.clear_container()
-        self.current_screen = SettingsScreen(self.container, self.settings_manager, self.show_camera_screen)
+        self.current_screen = SettingsScreen(self.container, self.settings_manager)
         self.current_screen.grid(row=0, column=0)
 
     def clear_container(self):
