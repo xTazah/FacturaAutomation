@@ -11,6 +11,9 @@ class MainScreen:
         self.settings_manager = settings_manager
         self.camera = camera
 
+        self.camera_screen = None
+        self.settings_screen = None
+
         self.create_navigation()
 
         # container that holds the different screens
@@ -30,9 +33,9 @@ class MainScreen:
         self.gallery_icon = PhotoImage(file="ui/icons/gallery.png")
 
         # Creating the buttons with grid layout to simulate space-between
-        ButtonFactory.create_button(nav_frame, icon=self.gallery_icon, onClickHandler=self.show_settings, column=0, row=0)  # TODO: Implement gallery page
+        ButtonFactory.create_button(nav_frame, icon=self.gallery_icon, onClickHandler=self.show_settings_screen, column=0, row=0)  # TODO: Implement gallery page
         ButtonFactory.create_button(nav_frame, icon=self.camera_icon, onClickHandler=self.show_camera_screen, column=1, row=0)
-        ButtonFactory.create_button(nav_frame, icon=self.settings_icon, onClickHandler=self.show_settings, column=2, row=0)
+        ButtonFactory.create_button(nav_frame, icon=self.settings_icon, onClickHandler=self.show_settings_screen, column=2, row=0)
 
         # Adjusting column weights to achieve space-between effect
         nav_frame.grid_columnconfigure(0, weight=1)
@@ -40,14 +43,28 @@ class MainScreen:
         nav_frame.grid_columnconfigure(2, weight=1)
 
     def show_camera_screen(self):
-        self.clear_container()
-        self.current_screen = CameraScreen(self.container, self.camera)
-        self.current_screen.grid(row=0, column=0)
+        if not self.camera_screen:
+                self.camera_screen = CameraScreen(self.container, self.camera)
 
-    def show_settings(self):
-        self.clear_container()
-        self.current_screen = SettingsScreen(self.container, self.settings_manager)
-        self.current_screen.grid(row=0, column=0)
+        if self.current_screen != self.camera_screen:
+            
+            if self.current_screen:
+                self.current_screen.grid_forget()
+
+            self.current_screen = self.camera_screen
+            self.current_screen.grid(row=0, column=0)
+
+    def show_settings_screen(self):
+        if not self.settings_screen:
+            self.settings_screen = SettingsScreen(self.container, self.settings_manager)
+
+        if self.current_screen != self.settings_screen:
+
+            if self.current_screen:
+                self.current_screen.grid_forget()
+
+            self.current_screen = self.settings_screen
+            self.current_screen.grid(row=0, column=0)
 
     def clear_container(self):
         for widget in self.container.winfo_children():
