@@ -1,4 +1,5 @@
 import cv2
+import os
 
 class Camera:
     def __init__(self):
@@ -13,10 +14,9 @@ class Camera:
     def take_photo(self):
         frame = self.get_frame()
         if frame is not None:
-            # ToDo: save correctly with metadata that it has not been processed
-            cv2.imwrite("screenshot.png", frame)
+            return frame
         else:
-            raise EnvironmentError
+            raise EnvironmentError("Cannot capture image")
 
     def release(self):
         self.cap.release()

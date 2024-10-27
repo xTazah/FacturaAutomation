@@ -4,13 +4,17 @@ from ui.camera_screen import CameraScreen
 from ui.settings_screen import SettingsScreen
 from button_factory import ButtonFactory
 from ui.toast import Toast
+from settings_manager import SettingsManager
+from camera import Camera
+from gallery import Gallery
 
 class MainScreen:
-    def __init__(self, root, settings_manager, camera):
+    def __init__(self, root, settings_manager: SettingsManager, camera: Camera, gallery: Gallery):
         self.root = root
         self.root.title("Camera Scanner")
         self.settings_manager = settings_manager
         self.camera = camera
+        self.gallery = gallery
 
         self.camera_screen = None
         self.settings_screen = None
@@ -45,7 +49,7 @@ class MainScreen:
 
     def show_camera_screen(self):
         if not self.camera_screen:
-                self.camera_screen = CameraScreen(self.container, self.camera, self.create_toast)
+                self.camera_screen = CameraScreen(self.container, self.camera, self.gallery)
 
         if self.current_screen != self.camera_screen:
             

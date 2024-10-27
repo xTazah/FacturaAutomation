@@ -2,11 +2,15 @@ import tkinter as tk
 from ui.main_screen import MainScreen
 from settings_manager import SettingsManager
 from camera import Camera
+from image_processor import ImageProcessor
+from gallery import Gallery
 
 class App:
     def __init__(self):
         self.settings_manager = SettingsManager()
         self.camera = Camera()
+        self.image_processor = ImageProcessor()
+        self.gallery = Gallery(self.image_processor.image_queue)
 
         self.root = tk.Tk()
         width = self.settings_manager.get("window_width", 800)
@@ -17,7 +21,7 @@ class App:
         # resize event
         self.root.bind("<Configure>", self.on_resize)
 
-        self.main_screen = MainScreen(self.root, self.settings_manager, self.camera)
+        self.main_screen = MainScreen(self.root, self.settings_manager, self.camera, self.gallery)
 
 
     def on_resize(self, event):
