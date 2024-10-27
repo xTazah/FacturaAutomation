@@ -1,7 +1,7 @@
 import tkinter as tk
 from ui.main_screen import MainScreen
 from settings_manager import SettingsManager
-from camera import Camera, CameraThread
+from camera import Camera
 
 class App:
     def __init__(self):
