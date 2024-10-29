@@ -2,8 +2,9 @@ import tkinter as tk
 from tkinter import PhotoImage
 from ui.camera_screen import CameraScreen
 from ui.settings_screen import SettingsScreen
-from button_factory import ButtonFactory
+from ui.gallery_screen import GalleryScreen
 from ui.toast import Toast
+from button_factory import ButtonFactory
 from settings_manager import SettingsManager
 from camera import Camera
 from gallery import Gallery
@@ -38,7 +39,7 @@ class MainScreen:
         self.gallery_icon = PhotoImage(file="ui/icons/gallery.png")
 
         # Creating the buttons with grid layout to simulate space-between
-        ButtonFactory.create_button(nav_frame, icon=self.gallery_icon, onClickHandler=self.show_settings_screen, column=0, row=0)  # TODO: Implement gallery page
+        ButtonFactory.create_button(nav_frame, icon=self.gallery_icon, onClickHandler=self.show_gallery_screen, column=0, row=0)
         ButtonFactory.create_button(nav_frame, icon=self.camera_icon, onClickHandler=self.show_camera_screen, column=1, row=0)
         ButtonFactory.create_button(nav_frame, icon=self.settings_icon, onClickHandler=self.show_settings_screen, column=2, row=0)
 
@@ -62,6 +63,18 @@ class MainScreen:
     def show_settings_screen(self):
         if not self.settings_screen:
             self.settings_screen = SettingsScreen(self.container, self.settings_manager, self.create_toast)
+
+        if self.current_screen != self.settings_screen:
+
+            if self.current_screen:
+                self.current_screen.grid_forget()
+
+            self.current_screen = self.settings_screen
+            self.current_screen.grid(row=0, column=0)
+
+    def show_gallery_screen(self):
+        if not self.settings_screen:
+            self.settings_screen = GalleryScreen(self.container, self.gallery)
 
         if self.current_screen != self.settings_screen:
 
