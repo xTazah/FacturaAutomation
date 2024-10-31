@@ -1,30 +1,48 @@
 import tkinter as tk
 from PIL import ImageTk, PngImagePlugin
 from gallery import Gallery
+from utils.dynamic_grid import DynamicGrid
+
 #  todo
-
 class GalleryScreen(tk.Frame):
-    def __init__(self, master, gallery: Gallery):
+    def __init__(self, master, gallery):
         super().__init__(master)
-        self.images = gallery.get_images() #ToDo should be getting this from a property instead
+        self.gallery = gallery
+        self.dynamic_grid = DynamicGrid(self)
+        self.dynamic_grid.pack(fill="both", expand=True)
+        
+        # subscribe to gallery update events
+        self.gallery.event_dispatcher.subscribe("gallery_image_added", self.gallery_image_added_callback)
+        self.gallery.event_dispatcher.subscribe("gallery_image_deleted", self.gallery_image_deleted_callback)
 
-        width = self.winfo_width()
-        print(width)
-        columns = max(1,width //120) # set columns count dynmaically # ToDo: should calculate this based on variables (img width, padding, etc.) so if changed everything works as expected
-        for idx, img in enumerate(self.images):
-            row = idx // columns
-            col = idx % columns
-            print("row: " , row, "col: " , col)
-            tk_img = ImageTk.PhotoImage(img.resize((100,100)))
-            # container = tk.Frame(master)
-            # container.pack(side="left")
-            #label = tk.Label(master, bg ="black", width=15, height=7)
-            # label = tk.Label(master, image= tk_img)
-            #label.image = tk_img
-            #label.grid(row=row, column=col, padx= 5, pady = 5) #ToDo: variables
+        # dict to map boxes to filepaths
+        self.box_dict = {} 
 
+        self.render_gallery()
 
-            canvas = tk.Canvas(self, width=100, height=100, bg="white")
-            canvas.create_image(50, 50, image=tk_img)  # Bild in der Mitte des Canvas platzieren
-            canvas.image = tk_img  # Bildreferenz halten, damit das Bild nicht gelöscht wird
-            canvas.grid(row=row, column=col, padx=5, pady=5)
+    def render_gallery(self):
+        """inital rendering of all images """
+        for filename, img in self.gallery.images.items():
+            self.add_image(filename, img)
+
+    def add_image(self, filename, img):
+        """adds a new image to the grid"""
+        tk_img = ImageTk.PhotoImage(img.resize((100, 100)))
+        box = self.dynamic_grid.add_box(image=tk_img)
+        box.image = tk_img  # Keep reference to avoid garbage collection
+        self.box_dict[filename] = box  # Track box by filename
+
+    def remove_image(self, filename):
+        """removes a specific image box from the grid"""
+        box = self.box_dict.pop(filename)
+        if box:
+            print("box found")
+            box.destroy()
+
+    ######################## Callbacks ########################
+    
+    def gallery_image_added_callback(self, args):
+        self.add_image(args[0],args[1])
+    
+    def gallery_image_deleted_callback(self, args):
+        self.remove_image(args[0])

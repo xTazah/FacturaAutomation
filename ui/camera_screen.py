@@ -23,13 +23,13 @@ class CameraScreen(tk.Frame):
         if frame is not None:
             img = Image.fromarray(frame)
             imgtk = ImageTk.PhotoImage(image=img)
+            
             self.canvas.create_image(0, 0, image=imgtk, anchor="nw")
             self.canvas.imgtk = imgtk 
         self.after(10, self.update_camera)  # call again after 10 ms
 
     def take_photo(self):
         image = self.camera.take_photo()
-        print(self.gallery)
         self.gallery.save_image(image)
 
     def __del__(self):

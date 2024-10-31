@@ -1,5 +1,4 @@
 import cv2
-import os
 
 class Camera:
     def __init__(self):
@@ -8,7 +7,7 @@ class Camera:
     def get_frame(self):
         ret, frame = self.cap.read()
         if ret:
-            return frame
+            return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) #cpnvert to rbg
         return None
 
     def take_photo(self):
