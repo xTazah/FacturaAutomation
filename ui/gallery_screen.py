@@ -8,16 +8,23 @@ class GalleryScreen(tk.Frame):
         super().__init__(master)
         self.images = gallery.get_images() #ToDo should be getting this from a property instead
 
-        print(self.images)
-        width = master.winfo_width()
-        columns = max(1,width //120) # set columns count dynmaically
+        width = self.winfo_width()
+        print(width)
+        columns = max(1,width //120) # set columns count dynmaically # ToDo: should calculate this based on variables (img width, padding, etc.) so if changed everything works as expected
         for idx, img in enumerate(self.images):
-            print(img)
             row = idx // columns
             col = idx % columns
+            print("row: " , row, "col: " , col)
             tk_img = ImageTk.PhotoImage(img.resize((100,100)))
             # container = tk.Frame(master)
             # container.pack(side="left")
-            label = tk.Label(master, image= tk_img)
+            #label = tk.Label(master, bg ="black", width=15, height=7)
+            # label = tk.Label(master, image= tk_img)
             #label.image = tk_img
-            label.grid(row=row, column=col, padx= 5, pady = 5)
+            #label.grid(row=row, column=col, padx= 5, pady = 5) #ToDo: variables
+
+
+            canvas = tk.Canvas(self, width=100, height=100, bg="white")
+            canvas.create_image(50, 50, image=tk_img)  # Bild in der Mitte des Canvas platzieren
+            canvas.image = tk_img  # Bildreferenz halten, damit das Bild nicht gelöscht wird
+            canvas.grid(row=row, column=col, padx=5, pady=5)

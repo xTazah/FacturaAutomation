@@ -12,19 +12,20 @@ from gallery import Gallery
 class MainScreen:
     def __init__(self, root, settings_manager: SettingsManager, camera: Camera, gallery: Gallery):
         self.root = root
-        self.root.title("Camera Scanner")
+        self.root.title("Factura Automation")
         self.settings_manager = settings_manager
         self.camera = camera
         self.gallery = gallery
 
+        self.gallery_screen = None
         self.camera_screen = None
         self.settings_screen = None
 
         self.create_navigation()
 
         # container that holds the different screens
-        self.container = tk.Frame(root, height=800, width=800)
-        self.container.pack()
+        self.container = tk.Frame(root) #ToDo Should not be hard coded
+        self.container.pack(fill=tk.BOTH, expand= True)
 
         # show camera screen at startup
         self.current_screen = None
@@ -73,15 +74,15 @@ class MainScreen:
             self.current_screen.grid(row=0, column=0)
 
     def show_gallery_screen(self):
-        if not self.settings_screen:
-            self.settings_screen = GalleryScreen(self.container, self.gallery)
+        if not self.gallery_screen:
+            self.gallery_screen = GalleryScreen(self.container, self.gallery)
 
-        if self.current_screen != self.settings_screen:
+        if self.current_screen != self.gallery_screen:
 
             if self.current_screen:
                 self.current_screen.grid_forget()
 
-            self.current_screen = self.settings_screen
+            self.current_screen = self.gallery_screen
             self.current_screen.grid(row=0, column=0)
 
     def clear_container(self):
