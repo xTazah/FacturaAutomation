@@ -3,7 +3,7 @@ from tkinter import PhotoImage
 from ui.camera_screen import CameraScreen
 from ui.settings_screen import SettingsScreen
 from ui.gallery_screen import GalleryScreen
-from ui.toast import Toast
+from ui.utils.toast import Toast
 from button_factory import ButtonFactory
 from settings_manager import SettingsManager
 from camera import Camera

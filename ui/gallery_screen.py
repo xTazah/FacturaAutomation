@@ -1,11 +1,10 @@
 import tkinter as tk
 from PIL import ImageTk, PngImagePlugin
 from gallery import Gallery
-from utils.dynamic_grid import DynamicGrid
-
+from ui.utils.dynamic_grid import DynamicGrid
 #  todo
 class GalleryScreen(tk.Frame):
-    def __init__(self, master, gallery):
+    def __init__(self, master, gallery:Gallery):
         super().__init__(master)
         self.gallery = gallery
         self.dynamic_grid = DynamicGrid(self)
