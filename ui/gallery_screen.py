@@ -2,7 +2,7 @@ import tkinter as tk
 from PIL import ImageTk, PngImagePlugin
 from gallery import Gallery
 from ui.utils.dynamic_grid import DynamicGrid
-#  todo
+
 class GalleryScreen(tk.Frame):
     def __init__(self, master: tk.Tk, gallery:Gallery):
         super().__init__(master)
@@ -34,6 +34,7 @@ class GalleryScreen(tk.Frame):
         for filename, img in self.gallery.images.items():
             self.add_image(filename, img)
 
+    #ToDO: Add icons to indicate status Pending, Processing and Processed
     def add_image(self, filename, img):
         """adds a new image to the grid"""
         tk_img = ImageTk.PhotoImage(img.resize((100, 100)))
