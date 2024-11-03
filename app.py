@@ -11,9 +11,11 @@ class App:
         self.gallery = Gallery()
 
         self.root = tk.Tk()
-        width = self.settings_manager.get("window_width", 800)
-        height = self.settings_manager.get("window_height", 600)
+        self.root.resizable(False, False) #ToDo: should be accessible trough settings only
+        width = self.settings_manager.get("window_width", 1280)
+        height = self.settings_manager.get("window_height", 720)
         self.root.geometry(f"{width}x{height}")
+        self.root.update_idletasks() # needs to be called so the geometry actually changes...
         self.root.title("Factura Automation")
 
         # resize event
