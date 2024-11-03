@@ -22,7 +22,7 @@ class DynamicGrid(tk.Frame):
 
         self.boxes = []
 
-    def add_box(self, image, image_path: None):
+    def add_box(self, image, image_path= None):
         box = tk.Canvas(self.text, width=100, height=100, bg="white", bd=1, relief="sunken")
         if image:
             box.create_image(50, 50, image=image)
