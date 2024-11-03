@@ -29,24 +29,6 @@ class GalleryScreen(tk.Frame):
 
         self.render_gallery()
 
-        self.test()
-        self.after(200, self.test)
-
-    def test(self):
-        # Force update on master and grid, then print sizes
-        self.master.update_idletasks()
-        self.update_idletasks()
-        self.dynamic_grid.update_idletasks()
-        
-        print("Master:")
-        print("Width", self.master.winfo_width(), "Height", self.master.winfo_height())
-        
-        print("GalleryScreen:")
-        print("Width", self.winfo_width(), "Height", self.winfo_height())
-        
-        print("DynamicGrid:")
-        print("Width", self.dynamic_grid.winfo_width(), "Height", self.dynamic_grid.winfo_height())
-
     def render_gallery(self):
         """inital rendering of all images """
         for filename, img in self.gallery.images.items():
