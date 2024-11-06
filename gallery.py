@@ -74,7 +74,7 @@ class Gallery:
     def on_image_folder_change(self, event):
         # Refresh images based on file system event
         if event.event_type == "created":
-            time.sleep(0.5) # wait for file-handle to close (watchdog calls event before the file is created fully)
+            time.sleep(2) # wait for file-handle to close (watchdog calls event before the file is created fully)
             self.event_dispatcher.publish("gallery_image_added", [event.src_path, self.load_image(event.src_path)])
 
         elif event.event_type == "deleted":
@@ -90,8 +90,8 @@ class Gallery:
             try:
                 with Image.open(image_path) as img: # ensure file handle is closed 
                         self.images[image_path] = img.copy()  # make a copy in memory
-            except PngImagePlugin.UnidentifiedImageError:
-                print(f"Warning: Could not identify image file {image_path}")
+            except Exception:
+                print(f"Warning: Could not load image file {image_path}")
                 return None
         
             # metadata = image.info
