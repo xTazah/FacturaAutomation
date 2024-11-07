@@ -21,9 +21,9 @@ class TableEntry(BaseModel):
 # customer info
 class CustomerInfo(BaseModel):
     Fecha: str
-    Nombre: str
-    NrHabt: str
-    Hotel: str
+    Nombre: Optional[str] = None
+    NrHabt: Optional[str] = None
+    Hotel: Optional[str] = None
     Apellido: Optional[str] = None
 
 # factura
