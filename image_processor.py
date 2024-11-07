@@ -56,7 +56,7 @@ class ImageProcessorThread(threading.Thread):
         img_cv = cv2.imread(image_path)
 
         img = self.preprocess_image(img_cv)
-        img.show()
+        #img.show()
 
         # update metadata
         metadata = PngImagePlugin.PngInfo()
@@ -111,7 +111,7 @@ class ImageProcessorThread(threading.Thread):
             dst = cv2.perspectiveTransform(pts, M)
 
             #always return in 3/4 format
-            target_height = 1600 
+            target_height = 600
             target_width = int(target_height * 3 / 4)
 
             # calculate corners for warping
@@ -121,6 +121,9 @@ class ImageProcessorThread(threading.Thread):
             M_warp = cv2.getPerspectiveTransform(dst, dst_corners)
             factura_warped = cv2.warpPerspective(img, M_warp, (target_width, target_height))
 
-            return Image.fromarray(cv2.cvtColor(factura_warped, cv2.COLOR_BGR2RGB))
+            #crop out everything thats not needed to reduce img size (vision tokens are expensive openai angrE)
+            factura_cropped = factura_warped[125:target_height - 175, 0:target_width]
+
+            return Image.fromarray(cv2.cvtColor(factura_cropped, cv2.COLOR_BGR2RGB))
         else:
             raise Exception("No factura found in the image.")
