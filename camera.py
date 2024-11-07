@@ -2,7 +2,7 @@ import cv2
 
 class Camera:
     def __init__(self):
-        self.cap = cv2.VideoCapture(1)  # basic camera
+        self.cap = cv2.VideoCapture(0)  # basic camera
         self.cap.set( cv2.CAP_PROP_FRAME_WIDTH, 1920)
         self.cap.set( cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
