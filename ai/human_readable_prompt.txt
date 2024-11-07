@@ -1,0 +1,66 @@
+Analyze the provided invoice image and extract the following fields, including both printed and handwritten information, into a structured JSON format:
+
+Invoice Number - located at the top left.
+
+Payment Method - identified at the bottom right, marked with an "X". Options include:
+
+Efectivo (Cash)
+Credito/Habt. (Credit)
+Tarjeta credito (Credit Card)
+
+Customer Fields - handwritten fields in the following order (can be optional):
+
+Fecha (Date)
+Nombre (Name)
+Nr.Habt (Room Number)
+Hotel
+Apellido (First Name)
+Table Entries - up to 8 items in a table format:
+
+Each row includes a Concepto (description) and Precio (price).
+Classify each Concepto entry by category. 
+
+Available categories:
+Tennis Shop - Raquets
+Tennis Shop - Clothes & Accessories
+Tennis Court Rental
+Tennis Raquets Rental
+Kiosk
+Gym
+Minigolf
+
+Output Structure - Return a JSON object with:
+
+All extracted fields.
+Table Summary: a consolidated breakdown where items from the same category are grouped with total prices, including specific article information if relevant (e.g., Kiosk: {"Total": "3 €", "Details": ["2x Water"]}).
+
+json
+{
+  "InvoiceNumber": "12345",
+  "Payment": "Efectivo",
+  "CustomerInfo": {
+    "Fecha": "01.10.2024",
+    "Nombre": "John",
+    "NrHabt": "204",
+    "Hotel": "Beachside Resort",
+    "Apellido": "Doe"
+  },
+  "TableSummary": [
+        {
+            "category": "Tennis Raquets Rental",
+            "total": "13 €",
+            "details": ["2x Raquets", "1x Balls"]
+        },
+        {
+            "category": "Kiosk",
+            "total": "3 €",
+            "details": ["2x Water"]
+        },
+        {
+            "category": "Tennis Court Rental",
+            "total": "12 €",
+            "details": ["1h Court"]
+        }
+    ]
+}
+Make sure the JSON output is ALWAYS formatted like this because it will be parsed into a Python dictionary.
