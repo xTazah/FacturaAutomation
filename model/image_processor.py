@@ -12,6 +12,7 @@ import numpy as np
 from pydantic import ValidationError
 from model.ai.response_format import Factura
 from utils.exceptions import NoFacturaFoundException
+from model.google_sheets_manager import GoogleSheetsManager
 
 dotenv.load_dotenv()
 
@@ -36,6 +37,8 @@ class ImageProcessorThread(threading.Thread):
 
         self.template_img =  cv2.cvtColor(cv2.imread('utils/blank_factura.png'), cv2.COLOR_BGR2GRAY)
         self.template_keypoints, self.template_descriptors = self.sift.detectAndCompute(self.template_img, None)
+
+        self.google_sheets_manager = GoogleSheetsManager()
 
     def run(self):
         retry = 0
@@ -69,6 +72,7 @@ class ImageProcessorThread(threading.Thread):
             factura:Factura = self.send_to_openai(img)
 
             #ToDo: write to google sheets api
+            self.google_sheets_manager.insert_factura_to_sheet(factura)
 
             # update metadata
             metadata.add_text("status", "Completed")

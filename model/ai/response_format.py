@@ -4,13 +4,18 @@ from typing import Optional, List, Dict
 
 # categories inside google sheets
 class Category(str, Enum):
-    TennisRaquetsRental = "Tennis Raquets Rental"
+    TennisRaquetsRental = "Tennis Raquets rental"
     Kiosk = "Kiosk"
-    TennisCourtRental = "Tennis Court Rental"
-    TennisShopRaquets = "Tennis Shop - Raquets"
-    TennisShopClothesAccessories = "Tennis Shop - Clothes & Accessories"
+    TennisCourtRental = "Tennis Court rental"
+    TennisShopRaquets = "Tennis Shop- Raquets"
+    TennisShopClothesAccessories = "Tennis Shop- Clothes & Accesories"
     Gym = "Gym"
     Minigolf = "Minigolf"
+
+class PaymentType(str, Enum):
+    Efectivo = "Bargeld/Cash"
+    CreditHabt = "Zimmerrechnung"
+    Tarjeta = "Kreditkarte/Card"
 
 # represents table entry
 class TableEntry(BaseModel):
@@ -29,6 +34,6 @@ class CustomerInfo(BaseModel):
 # factura
 class Factura(BaseModel):
     InvoiceNumber: str
-    Payment: str
+    Payment: PaymentType
     CustomerInfo: CustomerInfo
     TableSummary: List[TableEntry]
