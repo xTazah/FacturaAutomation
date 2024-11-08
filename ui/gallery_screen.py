@@ -34,7 +34,7 @@ class GalleryScreen(tk.Frame):
         for filename, img in self.gallery.images.items():
             self.add_image(filename, img)
 
-    #ToDO: Add icons to indicate status Pending, Processing and Processed
+    #ToDO: Add icons to indicate status Pending, Processing and Processed, Error
     def add_image(self, filename, img):
         """adds a new image to the grid"""
         tk_img = ImageTk.PhotoImage(img.resize((100, 100)))

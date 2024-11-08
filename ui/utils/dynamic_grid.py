@@ -39,6 +39,5 @@ class DynamicGrid(tk.Frame):
     
     #ToDo: get absolute filepath from gallery.py and then use it in add_box
     def open_image(self, image_path):
-        # open image using the default image viewer
-        if os.path.exists(image_path):
-            subprocess.Popen(['start', image_path], shell=True)
+        # ToDo: popup to make it big and do a rerun manually
+        pass
