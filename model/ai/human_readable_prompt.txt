@@ -4,9 +4,9 @@ Invoice Number - located at the top left.
 
 Payment Method - identified at the bottom right, marked with an "X". Options include:
 
-Efectivo (Cash)
-Credito/Habt. (Credit)
-Tarjeta credito (Credit Card)
+"Bargeld/Cash" (Efectivo)
+"Zimmerrechnung" (Crédito/Habt.)
+"Kreditkarte/Card" (Tarjeta crédito)
 
 Customer Fields - handwritten fields in the following order (can be optional):
 
@@ -17,27 +17,28 @@ Hotel
 Apellido (First Name)
 Table Entries - up to 8 items in a table format:
 
-Each row includes a Concepto (description) and Precio (price).
-Classify each Concepto entry by category. 
+Each row includes a Concepto (description) and Precio (price) for articles of the entire row. 
+Classify each Concepto entry by category. If the concepto does not state "shop" explicitly, automatically assume it's a rental!
 
 Available categories:
-Tennis Shop - Raquets
-Tennis Shop - Clothes & Accessories
-Tennis Court Rental
-Tennis Raquets Rental
-Kiosk
-Gym
+Tennis Court rental (court rental in hours)
+Tennis Raquets rental (includes raquets and balls)
+Tennis Shop- Raquets (super rare)
+Tennis Shop- Clothes & Accesories (also rare)
+Kiosk (all drinks)
+Gym (either daily, weekly or monthly)
 Minigolf
 
 Output Structure - Return a JSON object with:
 
 All extracted fields.
-Table Summary: a consolidated breakdown where items from the same category are grouped with total prices, including specific article information if relevant (e.g., Kiosk: {"Total": "3 €", "Details": ["2x Water"]}).
+Table Summary: a consolidated breakdown where items from the same category are grouped with total prices, including specific article information if relevant (e.g., Kiosk: {"Total": "3 €", "Details": ["2x Water"]}). Its crucial that you don't mess up the math since this will lead to us losing money.
+So e.g. if there are 2 concepto that are both from Category Kiosk (e.g. row1: 2x Water and row2: 1x Pepsi) group them together and add their price.
 
 json
 {
   "InvoiceNumber": "12345",
-  "Payment": "Efectivo",
+  "Payment": "Bargeld/Cash",
   "CustomerInfo": {
     "Fecha": "01.10.2024",
     "Nombre": "John",
@@ -53,14 +54,15 @@ json
         },
         {
             "category": "Kiosk",
-            "total": "3 €",
-            "details": ["2x Water"]
+            "total": "4,5 €",
+            "details": ["2x Water", "1x Pepsi"]
         },
         {
             "category": "Tennis Court Rental",
-            "total": "12 €",
-            "details": ["1h Court"]
+            "total": "24 €",
+            "details": ["2h Court"]
         }
     ]
 }
 Make sure the JSON output is ALWAYS formatted like this because it will be parsed into a Python dictionary.
+It is crucial that the categories are typed as given to you in this system prompt (including upper and lower case and spaces).
