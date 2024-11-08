@@ -1,7 +1,7 @@
 import tkinter as tk
 from PIL import Image, ImageTk
-from camera import Camera
-from gallery import Gallery
+from model.camera import Camera
+from model.gallery import Gallery
 
 class CameraScreen(tk.Frame):
     def __init__(self, master, camera: Camera, gallery: Gallery):

@@ -4,11 +4,11 @@ from ui.camera_screen import CameraScreen
 from ui.settings_screen import SettingsScreen
 from ui.gallery_screen import GalleryScreen
 from ui.utils.toast import Toast
-from button_factory import ButtonFactory
-from settings_manager import SettingsManager
-from camera import Camera
+from ui.utils.button_factory import ButtonFactory
+from model.settings_manager import SettingsManager
+from model.camera import Camera
 import tkinter as tk
-from gallery import Gallery
+from model.gallery import Gallery
 
 class MainScreen:
     def __init__(self, root: tk.Tk, settings_manager: SettingsManager, camera: Camera, gallery: Gallery):

@@ -3,10 +3,10 @@ import os
 import threading
 from PIL import Image, PngImagePlugin
 import time
-from image_processor import ImageProcessorThread
+from model.image_processor import ImageProcessorThread
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from event_dispatcher import EventDispatcher
+from utils.event_dispatcher import EventDispatcher
 
 # handles saving images to filesystem, reading all images on startup and handling file metadata
 class Gallery:

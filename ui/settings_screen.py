@@ -1,7 +1,7 @@
 import tkinter as tk
 import json
-from settings_manager import SettingsManager
-from button_factory import ButtonFactory
+from model.settings_manager import SettingsManager
+from ui.utils.button_factory import ButtonFactory
 
 
 class SettingsScreen(tk.Frame):

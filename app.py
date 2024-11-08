@@ -1,8 +1,8 @@
 import tkinter as tk
 from ui.main_screen import MainScreen
-from settings_manager import SettingsManager
-from camera import Camera
-from gallery import Gallery
+from model.settings_manager import SettingsManager
+from model.camera import Camera
+from model.gallery import Gallery
 
 class App:
     def __init__(self):

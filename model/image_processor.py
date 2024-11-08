@@ -10,8 +10,8 @@ from PIL import Image, PngImagePlugin
 import cv2
 import numpy as np
 from pydantic import ValidationError
-from ai.response_format import Factura
-from exceptions import NoFacturaFoundException
+from model.ai.response_format import Factura
+from utils.exceptions import NoFacturaFoundException
 
 dotenv.load_dotenv()
 
@@ -34,7 +34,7 @@ class ImageProcessorThread(threading.Thread):
 
         self.flann = cv2.FlannBasedMatcher(index_params, search_params)
 
-        self.template_img =  cv2.cvtColor(cv2.imread('test/blank_factura.png'), cv2.COLOR_BGR2GRAY)
+        self.template_img =  cv2.cvtColor(cv2.imread('utils/blank_factura.png'), cv2.COLOR_BGR2GRAY)
         self.template_keypoints, self.template_descriptors = self.sift.detectAndCompute(self.template_img, None)
 
     def run(self):
@@ -157,7 +157,7 @@ class ImageProcessorThread(threading.Thread):
 
     def send_to_openai(self,cropped_image):
         base64_image = self.encode_image(cropped_image)
-        with open('./ai/system_prompt.txt', 'r') as file:
+        with open('./model/ai/system_prompt.txt', 'r') as file:
             system_prompt = file.read()
 
         response = openai.ChatCompletion.create(

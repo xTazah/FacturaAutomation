@@ -1,6 +1,6 @@
 import tkinter as tk
 from PIL import ImageTk, PngImagePlugin
-from gallery import Gallery
+from model.gallery import Gallery
 from ui.utils.dynamic_grid import DynamicGrid
 
 class GalleryScreen(tk.Frame):
